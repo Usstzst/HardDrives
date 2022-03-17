@@ -53,3 +53,17 @@ The first row of the each file contains the column names, the remaining rows are
 
 
 
+
+
+TrainDataSet: from 2015 to 2017
+
+TestDataSet: 2021(health, failured)
+
+| model         | FAR   | FDR   |
+| ------------- | ----- | ----- |
+| KDD hardcoded | 0.094 | 0.708 |
+| RNN Net       |       |       |
+| Dense Net 32  |       |       |
+| Dense Net 8   |       |       |
+| Dense Net 8,8 |       |       |
+

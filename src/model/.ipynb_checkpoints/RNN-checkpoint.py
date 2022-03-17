@@ -64,38 +64,40 @@ class RNN(nn.Module):
         return torch.zeros(1, self.hidden_size)
     
     
+
     
-# model = RNN()
-# criterion = torch.nn.CrossEntropyLoss()
+    
+def train_epoch(model, dataloader, optimizer, criterion):
+    model.train()
+    losses = []
+    for batch_idx, batch in enumerate(dataloader):
+        x, y = batch['x'], batch['y']
+        optimizer.zero_grad()
+        outputs, h_n = model(x)
+        loss = criterion(outputs, y.long())
+        loss.backward()
+        optimizer.step()
+        losses.append(loss.detach().numpy())
+    return np.mean(losses)
 
-# optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
-# train_set = [[3, 0, 0, 1, 1, 2],
-#              [3, 0, 1, 2],
-#              [3, 0, 0, 0, 1, 1, 1, 2],
-#              [3, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2]]
-
-
-
-# # 重复进行50次试验
-# num_epoch = 5
-# loss_list = []
-# for epoch in range(num_epoch):
-#     train_loss = 0
-#     # 对train_set中的数据进行随机洗牌，以保证每个epoch得到的训练顺序都不一样。
-#     np.random.shuffle(train_set)
-#     # 对train_set中的数据进行循环
-#     for i, seq in enumerate(train_set):
-#         loss = 0
-#         for t in range(len(seq) - 1):
-
-#             x = torch.Tensor([seq[t]])
-#             y = torch.Tensor([seq[ t +1]])
-
-#             output, h_n = model(x)  # 综合加了RNN的模型输出 输出
-#             loss += criterion(output ,y.long())
-
-#         loss = 1.0 * loss / len(seq)  # 计算每字符的损失数值
-#         print(loss)
-#         optimizer.zero_grad() # 梯度清空
-#         loss.backward()  # 反向传播
-#         optimizer.step()  # 一步梯度下降
+def evaluate(model, dataloader, criterion):
+    probs = []
+    labels = []
+    losses = []
+    model.eval()
+    with torch.no_grad():
+        for batch_idx, batch in enumerate(dataloader):
+            x, y = batch['x'], batch['y']
+            outputs = model(x)  # size: [B, 2]
+            loss = criterion(outputs, y.long())
+            probs.append(softmax(outputs).numpy())
+            labels.append(y.numpy())
+            losses.append(loss.detach().numpy())
+    probs = np.concatenate(probs, axis=0)[:, 1]
+    labels = np.concatenate(labels, axis=0)
+    metrics = {
+        'FAR': FAR(labels, probs),
+        'FDR': FDR(labels, probs),
+        'loss': np.nanmean(losses)
+    }
+    return metrics
