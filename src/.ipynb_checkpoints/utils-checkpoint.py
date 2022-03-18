@@ -21,15 +21,18 @@ def FDR(y_true, y_pred):
     y_pred = (y_pred >= 0.5).astype(int)
     TP = ((y_true == 1) * (y_true == y_pred)).sum()
     FN = ((y_true == 1) * (y_true != y_pred)).sum()
-    return '{:.3f}'.format(TP / (TP + FN))
+    return '{:.3f}'.format(TP/(TP + FN))
+
 
 
 def FNR(y_true, y_pred):
     '''
     False negative rate
+
     '''
     y_pred = (y_pred >= 0.5).astype(int)
     TP = ((y_true == 1) * (y_true == y_pred)).sum()
     FN = ((y_true == 1) * (y_true != y_pred)).sum()
-    return '{:.3f}'.format(FN / (FN + TP))
+    return '{:.3f}'.format(FN / (FN + TP + 1))
+
 

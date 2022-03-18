@@ -8,7 +8,7 @@ class RNN(nn.Module):
         # 定义
         super(RNN, self).__init__()
 
-        input_size =1  # 输入x的特征数 也就是 feature
+        input_size =5  # 输入x的特征数 也就是 feature
         hidden_size =20 # 隐含层的特征数量
         num_layers =2   # rnn的层数
 
