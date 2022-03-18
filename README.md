@@ -45,19 +45,10 @@ The first row of the each file contains the column names, the remaining rows are
 
 暂定
 
-## 5. 模型搭建
+## 5. 模型结果
 
-![image-20220314224151367](C:\Users\Julianna\AppData\Roaming\Typora\typora-user-images\image-20220314224151367.png)
-
-
-
-
-
-
-
-TrainDataSet: from 2015 to 2017
-
-TestDataSet: 2021(health, failured)
+TrainDataSet: from 2015 to 2020
+TestDataSet: 2021
 
 | model         | FAR   | FDR   |
 | ------------- | ----- | ----- |
