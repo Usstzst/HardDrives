@@ -62,8 +62,8 @@ TestDataSet: 2021(health, failured)
 | model         | FAR   | FDR   |
 | ------------- | ----- | ----- |
 | KDD hardcoded | 0.094 | 0.708 |
-| RNN Net       |       |       |
-| Dense Net 32  |       |       |
-| Dense Net 8   |       |       |
-| Dense Net 8,8 |       |       |
+| RNN Net       | 0.017 | 0.75  |
+| Dense Net 32  | 0.037 | 0.75  |
+| Dense Net 8   | 0.001 | 0.25  |
+| Dense Net 8,8 | 0.001 | 0.500 |
 
